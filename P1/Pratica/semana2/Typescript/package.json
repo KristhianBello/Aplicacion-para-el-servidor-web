@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-  "dev": "ts-node --esm src/adopciones.ts",
-  "build": "rimraf ./dist && tsc",
-  "start": "npm run build && node dist/app.js"
-},
+    "dev": "ts-node src/adopciones.ts",
+    "build": "rimraf ./dist && tsc",
+    "start": "npm run build && node dist/app.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
