@@ -1,9 +1,9 @@
 {
-  "name": "typescript",
+  "name": "semana4",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node src/app.ts",
+    "dev": "tsnd --respawn --clear src/app.ts",
     "build": "rimraf ./dist && tsc",
     "start": "npm run build && node dist/app.js"
   },
@@ -12,13 +12,13 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@types/node": "^22.15.18",
-    "ts-node": "^10.9.2",
+    "@types/express": "^5.0.2",
+    "@types/node": "^22.15.19",
+    "rimraf": "^6.0.1",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.3"
   },
   "dependencies": {
-    "pg": "^8.16.0",
-    "reflect-metadata": "^0.2.2",
-    "typeorm": "^0.3.23"
+    "express": "^5.1.0"
   }
 }
