@@ -4,7 +4,6 @@ import {iniciar} from "./database"
 import "reflect-metadata";
 import { CrearVista } from './crud'
 import { obtenerUser } from './crud'
-import { isAwaitKeyword } from "typescript";
 
 
 async function main() {

@@ -1,4 +1,3 @@
-import { isAwaitKeyword } from "typescript";
 import { AppDataSource } from "./data-source";
 import { user } from "./models/user";
 import { view } from "./models/view";
