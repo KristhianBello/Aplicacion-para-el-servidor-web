@@ -1,0 +1,83 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Mascota {
+  id: ID!
+  nombre: String!
+  raza: String!
+}
+
+type Adoptante {
+  id: Int!
+  nombre: String!
+  telefono: String!
+  direccion: String!
+}
+
+type FechaAdopcion {
+  id: Int!
+  fecha: String!
+  mascotaId: Int!
+  adoptanteId: Int!
+}
+
+type Query {
+  mascotas: [Mascota!]!
+  mascota(id: Int!): Mascota!
+  adoptantes: [Adoptante!]!
+  adoptante(id: Int!): Adoptante!
+  fechaAdopciones: [FechaAdopcion!]!
+  fechaAdopcion(id: ID!): FechaAdopcion!
+}
+
+type Mutation {
+  createMascota(createMascotaInput: CreateMascotaInput!): Mascota!
+  updateMascota(updateMascotaInput: UpdateMascotaInput!): Mascota!
+  removeMascota(id: Int!): Mascota!
+  createAdoptante(createAdoptanteInput: CreateAdoptanteInput!): Adoptante!
+  updateAdoptante(updateAdoptanteInput: UpdateAdoptanteInput!): Adoptante!
+  removeAdoptante(id: Int!): Adoptante!
+  createFechaAdopcion(createFechaAdopcionInput: CreateFechaAdopcionInput!): FechaAdopcion!
+  updateFechaAdopcion(updateFechaAdopcionInput: UpdateFechaAdopcionInput!): FechaAdopcion!
+  removeFechaAdopcion(id: ID!): FechaAdopcion!
+}
+
+input CreateMascotaInput {
+  nombre: String!
+  raza: String!
+  edad: Int!
+}
+
+input UpdateMascotaInput {
+  nombre: String!
+  raza: String!
+  edad: Int!
+  id: ID!
+}
+
+input CreateAdoptanteInput {
+  nombre: String!
+  telefono: String!
+  direccion: String!
+}
+
+input UpdateAdoptanteInput {
+  nombre: String
+  telefono: String
+  direccion: String
+  id: ID!
+}
+
+input CreateFechaAdopcionInput {
+  fecha: String!
+  mascotaId: Int!
+  adoptanteId: Int!
+}
+
+input UpdateFechaAdopcionInput {
+  fecha: String
+  mascotaId: Int
+  adoptanteId: Int
+  id: ID!
+}
