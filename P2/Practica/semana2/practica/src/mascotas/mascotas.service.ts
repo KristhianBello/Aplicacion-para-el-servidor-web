@@ -10,29 +10,29 @@ export class MascotasService {
 
   constructor(
     @InjectRepository(Mascota)
-    private usersRepository: Repository<Mascota>,
-   ) { 
-    
+    private readonly mascotaRepository: Repository<Mascota>,
+  ) {
+
   }
+
   create(createMascotaDto: CreateMascotaDto) {
-    const mascota = this.usersRepository.create(createMascotaDto);
-    return this.usersRepository.save(mascota);
+    const mascota = this.mascotaRepository.create(createMascotaDto);
+    return this.mascotaRepository.save(mascota);
   }
 
   findAll() {
-    return this.usersRepository.find();
+    return this.mascotaRepository.find();
   }
 
   findOne(id: number) {
-    return this.usersRepository.findOneBy({ id });
+    return this.mascotaRepository.findOneBy({ where: {id} });
   }
 
   update(id: number, updateMascotaDto: UpdateMascotaDto) {
-    const mascota = this.usersRepository.create(updateMascotaDto);
-    return this.usersRepository.update(id, mascota);
+    return `This action updates a #${id} mascota`;
   }
 
   remove(id: number) {
-    return this.usersRepository.delete(id);
+    return `This action removes a #${id} mascota`;
   }
 }
