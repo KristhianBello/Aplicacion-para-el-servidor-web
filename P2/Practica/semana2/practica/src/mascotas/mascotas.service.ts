@@ -25,7 +25,7 @@ export class MascotasService {
   }
 
   findOne(id: number) {
-    return this.mascotaRepository.findOneBy({ where: {id} });
+    return this.mascotaRepository.findOneBy({id});
   }
 
   update(id: number, updateMascotaDto: UpdateMascotaDto) {

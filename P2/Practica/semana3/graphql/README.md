@@ -1,24 +1,24 @@
-# 🐾 AdoptaFácil - GraphQL API
-
-Este proyecto es una API GraphQL desarrollada con **NestJS** y **TypeORM** que permite gestionar un sistema de adopción de mascotas. Se implementa una arquitectura por capas, aplicando buenas prácticas de diseño de software moderno, usando el enfoque *Code First* con GraphQL.
-
-## 📘 Descripción del Proyecto
-
-La API permite:
-
-- Registrar y consultar información sobre adoptantes.
-- Gestionar mascotas disponibles para adopción.
-- Llevar control de las fechas de adopción entre adoptantes y mascotas.
+# 🐶 Plataforma de Adopción - CRUD en Tiempo Real con WebSockets
+Proyecto académico para la asignatura "Aplicación para el Servidor Web" (Práctica 3)
+Universidad Laica Eloy Alfaro de Manabí - Carrera de Software
 
 ---
+### 📌 Descripción
+Este proyecto implementa un CRUD en tiempo real usando NestJS + WebSockets + TypeORM + SQLite sobre tres entidades del sistema de adopciones:
+
+- ContratoAdopcion
+- DocumentacionMascota
+- CertificadoPropiedad
+
+Cada operación (crear, actualizar, eliminar) es transmitida por WebSockets a todos los clientes conectados, permitiendo sincronización inmediata de datos.
 
 ## ⚙️ Tecnologías Utilizadas
 
-- **Framework**: NestJS
-- **Base de datos**: SQLite
-- **ORM**: TypeORM
-- **API**: GraphQL (Code First) con Apollo Server
-- **Validación**: class-validator
+- NestJS
+- Socket.IO
+- TypeORM
+- SQLite
+- Postman v10+ con soporte WebSocket
 
 ---
 
@@ -153,10 +153,9 @@ src/
 ---
 
 ## 📌 Notas Importantes
-- El esquema GraphQL se genera automáticamente (schema.gql)
-- La base de datos SQLite (db.sqlite) se crea al ejecutar el proyecto
-- Se aplican validaciones en los DTOs usando class-validator
-- Se sigue el principio de separación por capas: datos, lógica y API
 
 ## Autor
-Kristhian Bello
+Kristhian Bello [Estudio]
+Docente: Ing. John Cevallos
+Periodo: 2025-2026 (1)
+Nivel: Quinto - Paralelo A
