@@ -1,0 +1,70 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type OperatorReport {
+  id: ID!
+  name: String!
+  email: String!
+  totalSales: Int!
+  totalRevenue: Float!
+}
+
+type GasolineTypeReport {
+  id: ID!
+  name: String!
+  price: Float!
+  totalSales: Int!
+  totalVolume: Float!
+  totalRevenue: Float!
+}
+
+type SurtidorReport {
+  id: ID!
+  location: String!
+  gasolineTypeName: String!
+  totalSales: Int!
+  totalVolume: Float!
+  totalRevenue: Float!
+}
+
+type SalesReport {
+  id: ID!
+  operatorName: String!
+  surtidorLocation: String!
+  gasolineTypeName: String!
+  quantity: Float!
+  totalAmount: Float!
+  date: String!
+}
+
+type DashboardStats {
+  totalOperators: Int!
+  totalSurtidores: Int!
+  totalGasolineTypes: Int!
+  totalSales: Int!
+  totalRevenue: Float!
+  averageSaleAmount: Float!
+}
+
+type Query {
+  dashboardStats: DashboardStats!
+  operatorReports: [OperatorReport!]!
+  gasolineTypeReports: [GasolineTypeReport!]!
+  surtidorReports: [SurtidorReport!]!
+  salesReports(filter: SalesFilterInput): [SalesReport!]!
+}
+
+input SalesFilterInput {
+  operatorId: String
+  surtidorId: String
+  gasolineTypeId: String
+  dateRange: DateRangeInput
+  minAmount: Float
+  maxAmount: Float
+}
+
+input DateRangeInput {
+  startDate: String
+  endDate: String
+}

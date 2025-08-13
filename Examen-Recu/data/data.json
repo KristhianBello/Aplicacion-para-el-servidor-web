@@ -1,0 +1,15 @@
+{
+  "operators": [
+    { "id": "1", "name": "Carlos Ramirez" },
+    { "id": "2", "name": "Fabaina Parra" }
+  ],
+  "surtidores": [
+    { "id": "1", "name": "Surtidor 1" },
+    { "id": "2", "name": "Surtidor 2" }
+  ],
+  "gasolineTypes": [
+    { "id": "1", "name": "Super", "price": 3.5 },
+    { "id": "2", "name": "Extra", "price": 2.5 },
+    { "id": "3", "name": "Diesel", "price": 1.8 }
+  ]
+}

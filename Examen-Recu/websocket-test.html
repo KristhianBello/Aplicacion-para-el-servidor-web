@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Notifications Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .connected { background-color: #d4edda; color: #155724; }
+        .disconnected { background-color: #f8d7da; color: #721c24; }
+        .notification {
+            background-color: #e7f3ff;
+            border: 1px solid #b8daff;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+        }
+        .timestamp {
+            color: #666;
+            font-size: 0.9em;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .log {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔌 WebSocket Notifications Test</h1>
+        
+        <div id="status" class="status disconnected">
+            Desconectado
+        </div>
+
+        <div>
+            <button onclick="connect()">Conectar</button>
+            <button onclick="disconnect()">Desconectar</button>
+            <button onclick="subscribe()">Suscribirse a Notificaciones</button>
+            <button onclick="clearLog()">Limpiar Log</button>
+        </div>
+
+        <h3>📝 Log de Eventos:</h3>
+        <div id="log" class="log"></div>
+
+        <h3>📊 Último Estado:</h3>
+        <div id="lastNotification" class="notification">
+            Esperando notificaciones...
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script>
+        let socket = null;
+        const statusDiv = document.getElementById('status');
+        const logDiv = document.getElementById('log');
+        const lastNotificationDiv = document.getElementById('lastNotification');
+
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.innerHTML = `<span class="timestamp">[${timestamp}]</span> ${message}`;
+            logDiv.appendChild(logEntry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function updateStatus(connected) {
+            if (connected) {
+                statusDiv.textContent = '🟢 Conectado al WebSocket';
+                statusDiv.className = 'status connected';
+            } else {
+                statusDiv.textContent = '🔴 Desconectado del WebSocket';
+                statusDiv.className = 'status disconnected';
+            }
+        }
+
+        function connect() {
+            if (socket) {
+                log('⚠️ Ya hay una conexión activa');
+                return;
+            }
+
+            log('🔄 Conectando a ws://localhost:3005/notifications');
+            socket = io('http://localhost:3005/notifications');
+
+            socket.on('connect', () => {
+                log('✅ Conectado exitosamente');
+                updateStatus(true);
+            });
+
+            socket.on('disconnect', () => {
+                log('❌ Desconectado del servidor');
+                updateStatus(false);
+            });
+
+            socket.on('connected', (data) => {
+                log(`🎉 Mensaje de bienvenida: ${data.message}`);
+                log(`🆔 Client ID: ${data.clientId}`);
+            });
+
+            socket.on('notification', (data) => {
+                log(`📢 Nueva notificación: ${data.microservice} - ${data.entity} - ${data.operation}`);
+                lastNotificationDiv.innerHTML = `
+                    <strong>🚨 ${data.operation.toUpperCase()}</strong><br>
+                    <strong>Microservicio:</strong> ${data.microservice}<br>
+                    <strong>Entidad:</strong> ${data.entity}<br>
+                    <strong>Datos:</strong> <pre>${JSON.stringify(data.data, null, 2)}</pre>
+                    <span class="timestamp">${data.timestamp}</span>
+                `;
+            });
+
+            socket.on('subscribed', (data) => {
+                log(`✅ ${data.message}`);
+            });
+
+            socket.on('error', (error) => {
+                log(`❌ Error: ${error.message}`);
+            });
+        }
+
+        function disconnect() {
+            if (socket) {
+                socket.disconnect();
+                socket = null;
+                log('🔌 Desconectado manualmente');
+                updateStatus(false);
+            } else {
+                log('⚠️ No hay conexión activa');
+            }
+        }
+
+        function subscribe() {
+            if (socket && socket.connected) {
+                socket.emit('subscribe', { microservice: 'all' });
+                log('📧 Enviada solicitud de suscripción');
+            } else {
+                log('⚠️ No hay conexión activa. Conecta primero.');
+            }
+        }
+
+        function clearLog() {
+            logDiv.innerHTML = '';
+            log('🧹 Log limpiado');
+        }
+
+        // Conectar automáticamente al cargar la página
+        window.onload = () => {
+            log('🌐 Página cargada. Haz clic en "Conectar" para iniciar.');
+        };
+    </script>
+</body>
+</html>
